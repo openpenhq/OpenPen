@@ -1,6 +1,6 @@
 # OpenPen
 
-The Non-AI Writer for Claude and Codex.
+The Non-AI Writer for Claude and ChatGPT.
 
 Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
 
