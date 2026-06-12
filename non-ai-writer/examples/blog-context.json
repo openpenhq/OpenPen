@@ -1,0 +1,27 @@
+{
+  "desired_output": "blog article",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Research the SERP and Reddit threads, then write the final blog article for our site."
+    },
+    {
+      "role": "assistant",
+      "content": "The core angle is that SEO agents can gather a lot of context, but the final draft still fails when it only repeats keyword phrasing. The article should explain why buyer language and point of view matter."
+    }
+  ],
+  "tool_outputs": [
+    {
+      "name": "serp_and_reddit_research",
+      "type": "research",
+      "content": "SERP pages repeat generic keyword clusters. Reddit threads complain that AI SEO articles feel interchangeable, miss the actual buyer language, and do not explain what changed or why the reader should care."
+    }
+  ],
+  "options": {
+    "target_words": "auto",
+    "output_format": "markdown"
+  },
+  "metadata": {
+    "source": "agent_skill_example"
+  }
+}
