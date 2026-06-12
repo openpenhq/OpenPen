@@ -1,6 +1,6 @@
-# The Non-AI Writer Agent Skill
+# OpenPen
 
-This package makes The Non-AI Writer usable from Claude, Codex, and similar local agent workflows.
+The Non-AI Writer for Claude, Codex, and similar local agent workflows.
 
 It does not ask the user to manually rewrite their prompt. The agent gathers the relevant current conversation and tool context, passes that compact context to the script, and the script runs the full API flow:
 
@@ -17,11 +17,11 @@ agent conversation / research / tool outputs
 Set these environment variables where the skill script runs:
 
 ```bash
-export NON_AI_WRITER_API_KEY="naiw_live_..."
-export NON_AI_WRITER_API_BASE_URL="https://your-production-domain.com"
+export OPENPEN_API_KEY="naiw_live_..."
+export OPENPEN_API_BASE_URL="https://your-production-domain.com"
 ```
 
-Do not hardcode API keys inside `SKILL.md` or scripts.
+The legacy `NON_AI_WRITER_API_KEY` and `NON_AI_WRITER_API_BASE_URL` names also work. Do not hardcode API keys inside `SKILL.md` or scripts.
 
 ## Test Locally
 
@@ -40,7 +40,7 @@ Use `--brief-only` to verify the adapter output without consuming a draft credit
 Once this skill is installed, the user can say:
 
 ```txt
-Use The Non-AI Writer to turn this research into the final blog post.
+Use OpenPen to turn this research into the final blog post.
 ```
 
 The agent should:

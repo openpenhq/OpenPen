@@ -1,21 +1,23 @@
 ---
-name: non-ai-writer
-description: Use The Non-AI Writer API as the final prose layer when the user wants the current agent conversation, research, notes, or tool outputs turned into a publishable article, blog post, SEO brief, landing page section, newsletter, email, script, memo, or post. Works for Claude, Codex, and similar local agent workflows.
+name: openpen
+description: Use OpenPen, the Non-AI Writer API, as the final prose layer when the user wants the current agent conversation, research, notes, or tool outputs turned into a publishable article, blog post, SEO brief, landing page section, newsletter, email, script, memo, or post. Works for Claude, Codex, and similar local agent workflows.
 ---
 
-# The Non-AI Writer
+# OpenPen
 
-Use this skill when the user wants to turn the current work into a final draft with The Non-AI Writer.
+Use this skill when the user wants to turn the current work into a final draft with OpenPen.
 
 Typical triggers:
 - "Use The Non-AI Writer"
+- "Use OpenPen"
 - "send this to Non-AI Writer"
+- "send this to OpenPen"
 - "write the final blog/article/post with Non-AI Writer"
 - "turn this research into the final draft"
 - "use the final prose layer"
 - "make this publishable through my writer"
 
-Do not ask the user to manually re-prompt The Non-AI Writer. Build the request from the current agent conversation and any visible tool results.
+Do not ask the user to manually re-prompt OpenPen. Build the request from the current agent conversation and any visible tool results.
 
 ## What This Skill Does
 
@@ -34,11 +36,11 @@ The user should experience this as automatic.
 Before using the script, the environment must include:
 
 ```bash
-NON_AI_WRITER_API_KEY=naiw_live_...
-NON_AI_WRITER_API_BASE_URL=https://your-production-domain.com
+OPENPEN_API_KEY=naiw_live_...
+OPENPEN_API_BASE_URL=https://your-production-domain.com
 ```
 
-If the base URL is omitted, ask the user for it. Never guess the user's deployment domain.
+The legacy `NON_AI_WRITER_API_KEY` and `NON_AI_WRITER_API_BASE_URL` names also work. If the base URL is omitted, ask the user for it. Never guess the user's deployment domain.
 
 ## Build The Context Payload
 

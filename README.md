@@ -1,8 +1,8 @@
-# The Non-AI Writer Agent Skill
+# OpenPen
 
-Give Claude or Codex a final writing layer.
+The Non-AI Writer for Claude and Codex.
 
-Your agent does the research. This skill sends the visible working context to The Non-AI Writer and returns the final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
+Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
 
 ```txt
 agent conversation / research / tool outputs
@@ -12,50 +12,50 @@ agent conversation / research / tool outputs
   -> final draft
 ```
 
-The skill is public. The API is private beta. You need a Non-AI Writer account, credits, API beta access, and an API key.
+The skill is public. The API is private beta. You need an OpenPen account, credits, API beta access, and an API key.
 
 ## Install
 
 Ask your coding agent to install it:
 
 ```txt
-Install The Non-AI Writer Agent Skill.
+Install OpenPen.
 
-1. Clone https://github.com/CKaps1/non-ai-writer-agent-skill
-2. Install the non-ai-writer skill for this agent.
+1. Clone https://github.com/openpenhq/OpenPen
+2. Install the openpen skill for this agent.
 3. Use it when I ask for a final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
 ```
 
 Or clone it yourself:
 
 ```bash
-git clone https://github.com/CKaps1/non-ai-writer-agent-skill
+git clone https://github.com/openpenhq/OpenPen
 ```
 
-Then install the `non-ai-writer/` folder in the skills directory your agent uses.
+Then install the `openpen/` folder in the skills directory your agent uses.
 
 ## Configure
 
 Set these where the skill script runs:
 
 ```bash
-export NON_AI_WRITER_API_KEY="naiw_live_..."
-export NON_AI_WRITER_API_BASE_URL="https://your-non-ai-writer-domain.com"
+export OPENPEN_API_KEY="naiw_live_..."
+export OPENPEN_API_BASE_URL="https://your-openpen-domain.com"
 ```
 
-Do not paste API keys into prompts, `SKILL.md`, or checked-in files.
+The legacy `NON_AI_WRITER_API_KEY` and `NON_AI_WRITER_API_BASE_URL` names also work. Do not paste API keys into prompts, `SKILL.md`, or checked-in files.
 
 ## Test
 
 From the cloned repo:
 
 ```bash
-python3 non-ai-writer/scripts/non_ai_writer.py \
-  --input non-ai-writer/examples/blog-context.json \
+python3 openpen/scripts/non_ai_writer.py \
+  --input openpen/examples/blog-context.json \
   --dry-run
 
-python3 non-ai-writer/scripts/non_ai_writer.py \
-  --input non-ai-writer/examples/blog-context.json \
+python3 openpen/scripts/non_ai_writer.py \
+  --input openpen/examples/blog-context.json \
   --brief-only
 ```
 
@@ -64,8 +64,8 @@ python3 non-ai-writer/scripts/non_ai_writer.py \
 To create a real draft:
 
 ```bash
-python3 non-ai-writer/scripts/non_ai_writer.py \
-  --input non-ai-writer/examples/blog-context.json
+python3 openpen/scripts/non_ai_writer.py \
+  --input openpen/examples/blog-context.json
 ```
 
 ## Use
@@ -73,7 +73,7 @@ python3 non-ai-writer/scripts/non_ai_writer.py \
 After Claude or Codex has researched, planned, or gathered context, ask:
 
 ```txt
-Use The Non-AI Writer to turn this research into the final article.
+Use OpenPen to turn this research into the final article.
 ```
 
 The agent should package visible conversation context and tool outputs, run the skill script, and return the final draft plus run id.
@@ -91,7 +91,7 @@ The script cannot privately read a Claude or Codex conversation by itself. The a
 ## Requirements
 
 - Python 3.10+
-- The Non-AI Writer API key
+- OpenPen API key
 - API beta access
 - Credits for real draft runs
 

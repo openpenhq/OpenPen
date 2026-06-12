@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Agent Skill wrapper for The Non-AI Writer API.
+"""Agent Skill wrapper for OpenPen, the Non-AI Writer API.
 
 Reads workflow context JSON, compiles it through /v1/briefs, optionally creates a
 paid draft through /v1/drafts, then polls until the draft is complete.
@@ -20,6 +20,8 @@ from typing import Any
 DEFAULT_POLL_INTERVAL_SECONDS = 4.0
 DEFAULT_TIMEOUT_SECONDS = 600.0
 MAX_CLIENT_CONTEXT_CHARS = 120_000
+API_KEY_ENV_NAMES = ("OPENPEN_API_KEY", "NON_AI_WRITER_API_KEY")
+API_BASE_URL_ENV_NAMES = ("OPENPEN_API_BASE_URL", "NON_AI_WRITER_API_BASE_URL")
 
 
 class NonAiWriterError(RuntimeError):
@@ -48,8 +50,8 @@ def main() -> int:
             return 0
 
         client = NonAiWriterClient(
-            base_url=args.base_url or env_required("NON_AI_WRITER_API_BASE_URL"),
-            api_key=args.api_key or env_required("NON_AI_WRITER_API_KEY"),
+            base_url=args.base_url or env_required_any(API_BASE_URL_ENV_NAMES),
+            api_key=args.api_key or env_required_any(API_KEY_ENV_NAMES),
             timeout_seconds=args.request_timeout,
         )
         brief = client.create_brief(payload)
@@ -92,9 +94,9 @@ class NonAiWriterClient:
         self.api_key = api_key.strip()
         self.timeout_seconds = timeout_seconds
         if not self.base_url:
-            raise NonAiWriterError("NON_AI_WRITER_API_BASE_URL is empty.", code="missing_base_url")
+            raise NonAiWriterError("OPENPEN_API_BASE_URL is empty.", code="missing_base_url")
         if not self.api_key:
-            raise NonAiWriterError("NON_AI_WRITER_API_KEY is empty.", code="missing_api_key")
+            raise NonAiWriterError("OPENPEN_API_KEY is empty.", code="missing_api_key")
 
     def create_brief(self, payload: dict[str, Any]) -> dict[str, Any]:
         return self._request_json("POST", "/v1/briefs", payload)
@@ -137,7 +139,7 @@ class NonAiWriterClient:
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
                 "Accept": "application/json",
-                "User-Agent": "non-ai-writer-agent-skill/0.1",
+                "User-Agent": "openpen-agent-skill/0.1",
             },
         )
         try:
@@ -158,21 +160,21 @@ class NonAiWriterClient:
             ) from exc
         except urllib.error.URLError as exc:
             raise NonAiWriterError(
-                f"Could not reach The Non-AI Writer API: {exc.reason}",
+                f"Could not reach OpenPen API: {exc.reason}",
                 code="network_error",
                 retryable=True,
             ) from exc
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run The Non-AI Writer from agent workflow context.")
+    parser = argparse.ArgumentParser(description="Run OpenPen from agent workflow context.")
     source = parser.add_mutually_exclusive_group(required=True)
     source.add_argument("--stdin", action="store_true", help="Read JSON payload from stdin.")
     source.add_argument("--input", type=Path, help="Read JSON payload from a file.")
     parser.add_argument("--brief-only", action="store_true", help="Only call /v1/briefs and print the result.")
     parser.add_argument("--dry-run", action="store_true", help="Validate and print the normalized input payload.")
-    parser.add_argument("--base-url", help="API base URL. Defaults to NON_AI_WRITER_API_BASE_URL.")
-    parser.add_argument("--api-key", help="API key. Defaults to NON_AI_WRITER_API_KEY.")
+    parser.add_argument("--base-url", help="API base URL. Defaults to OPENPEN_API_BASE_URL.")
+    parser.add_argument("--api-key", help="API key. Defaults to OPENPEN_API_KEY.")
     parser.add_argument("--timeout", type=float, default=DEFAULT_TIMEOUT_SECONDS, help="Total polling timeout.")
     parser.add_argument(
         "--poll-interval",
@@ -313,11 +315,16 @@ def as_nonempty_string(value: Any) -> str | None:
     return value.strip() if isinstance(value, str) and value.strip() else None
 
 
-def env_required(name: str) -> str:
-    value = os.getenv(name, "").strip()
-    if not value:
-        raise NonAiWriterError(f"Missing required environment variable: {name}", code=f"missing_{name.lower()}")
-    return value
+def env_required_any(names: tuple[str, ...]) -> str:
+    for name in names:
+        value = os.getenv(name, "").strip()
+        if value:
+            return value
+    joined = " or ".join(names)
+    raise NonAiWriterError(
+        f"Missing required environment variable: {joined}",
+        code=f"missing_{names[0].lower()}",
+    )
 
 
 def emit(payload: dict[str, Any]) -> None:
