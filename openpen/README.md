@@ -6,8 +6,8 @@ It does not ask the user to manually rewrite their prompt. The agent gathers the
 
 ```txt
 agent conversation / research / tool outputs
-  -> POST /v1/briefs
   -> POST /v1/drafts
+     (OpenPen resolves the writing brief internally)
   -> GET /v1/drafts/:id
   -> final draft
 ```
@@ -76,7 +76,6 @@ Successful full run:
 {
   "ok": true,
   "mode": "draft",
-  "brief": {},
   "run": {
     "id": "...",
     "status": "succeeded",
@@ -102,3 +101,5 @@ Brief-only run:
 ```
 
 If `ready` is false, ask the returned `clarification_question`.
+
+Normal runs call `/v1/drafts` directly with the workflow context. Use `--brief-only` only when you want to inspect the context adapter output without creating a draft.

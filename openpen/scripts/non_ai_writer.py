@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Agent Skill wrapper for OpenPen, the Non-AI Writer API.
 
-Reads workflow context JSON, compiles it through /v1/briefs, optionally creates a
-paid draft through /v1/drafts, then polls until the draft is complete.
+Reads workflow context JSON, sends it directly to /v1/drafts, then polls until
+the final draft is complete. /v1/briefs is kept as an inspect-only helper.
 """
 
 from __future__ import annotations
@@ -63,16 +63,12 @@ def main() -> int:
             api_key=args.api_key or env_required_any(API_KEY_ENV_NAMES),
             timeout_seconds=args.request_timeout,
         )
-        brief = client.create_brief(payload)
-        if args.brief_only or not brief.get("ready"):
+        if args.brief_only:
+            brief = client.create_brief(payload)
             emit({"ok": bool(brief.get("ready")), "mode": "brief", "brief": brief})
             return 0 if brief.get("ready") else 2
 
-        draft_request = brief.get("draft_request")
-        if not isinstance(draft_request, dict):
-            raise NonAiWriterError("Brief did not include a draft_request.", code="missing_draft_request")
-
-        run = client.create_draft(draft_request)
+        run = client.create_draft(payload)
         run_id = as_nonempty_string(run.get("id"))
         if not run_id:
             raise NonAiWriterError("Draft response did not include an id.", code="missing_run_id", payload=run)
@@ -85,7 +81,6 @@ def main() -> int:
         emit({
             "ok": final.get("status") == "succeeded",
             "mode": "draft",
-            "brief": brief,
             "run": final,
         })
         return 0 if final.get("status") == "succeeded" else 3

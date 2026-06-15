@@ -6,13 +6,13 @@ Your agent does the research. OpenPen sends the visible working context to the N
 
 ```txt
 agent conversation / research / tool outputs
-  -> POST /v1/briefs
   -> POST /v1/drafts
+     (OpenPen resolves the writing brief internally)
   -> GET /v1/drafts/:id
   -> final draft
 ```
 
-The skill is public. The API is private beta. You need an OpenPen account, credits, API beta access, and an API key.
+The skill is public. The API is private beta. You need an OpenPen account, API beta access, and an API key. Free draft runs are included during beta; credits apply after the free cap.
 
 ## Install
 
@@ -59,7 +59,7 @@ python3 openpen/scripts/non_ai_writer.py \
   --brief-only
 ```
 
-`--brief-only` calls `/v1/briefs` and does not spend a draft credit.
+`--brief-only` calls `/v1/briefs` and does not create a draft run.
 
 To create a real draft:
 
@@ -96,10 +96,11 @@ If the user does not specify a mode, the skill defaults to `article`.
 ## What The Script Does
 
 1. Normalizes visible agent context.
-2. Calls `POST /v1/briefs`.
-3. Sends the returned `draft_request` to `POST /v1/drafts`.
-4. Polls `GET /v1/drafts/:id`.
-5. Prints the final JSON result.
+2. Calls `POST /v1/drafts` with that context.
+3. Polls `GET /v1/drafts/:id`.
+4. Prints the final JSON result.
+
+`--brief-only` still calls `POST /v1/briefs` when you want to inspect the context adapter without creating a draft.
 
 The script cannot privately read a Claude or Codex conversation by itself. The agent must pass the relevant visible context into the script.
 
@@ -108,6 +109,6 @@ The script cannot privately read a Claude or Codex conversation by itself. The a
 - Python 3.10+
 - OpenPen API key
 - API beta access
-- Credits for real draft runs
+- Free beta runs first; credits after the free cap
 
 No Python dependencies are required.

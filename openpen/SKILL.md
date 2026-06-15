@@ -23,11 +23,10 @@ Do not ask the user to manually re-prompt OpenPen. Build the request from the cu
 
 The script performs the full workflow:
 
-1. Sends the relevant current context to `POST /v1/briefs`.
-2. Receives a clean `draft_request`.
-3. Sends that `draft_request` to `POST /v1/drafts`.
-4. Polls `GET /v1/drafts/:id`.
-5. Returns the finished draft or a clear error.
+1. Sends the relevant current context directly to `POST /v1/drafts`.
+2. OpenPen resolves the context into a writing brief inside the API.
+3. Polls `GET /v1/drafts/:id`.
+4. Returns the finished draft or a clear error.
 
 The user should experience this as automatic.
 
@@ -114,6 +113,8 @@ python3 scripts/non_ai_writer.py --stdin --brief-only
 ```
 
 If the script returns `ready: false`, ask the returned clarification question instead of guessing.
+
+Normal runs do not require a separate `/v1/briefs` call. Use `--brief-only` only when the user explicitly wants to debug or inspect the context adapter.
 
 If the script returns a completed draft, present the draft directly to the user and mention the run id.
 
