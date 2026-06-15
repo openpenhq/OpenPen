@@ -78,6 +78,21 @@ Use OpenPen to turn this research into the final article.
 
 The agent should package visible conversation context and tool outputs, run the skill script, and return the final draft plus run id.
 
+## Modes
+
+OpenPen uses one mode as the output type and style control:
+
+```txt
+article
+seo_brief
+landing_page
+report
+script
+email
+```
+
+If the user does not specify a mode, the skill defaults to `article`.
+
 ## What The Script Does
 
 1. Normalizes visible agent context.

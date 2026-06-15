@@ -47,11 +47,26 @@ The agent should:
 
 1. Extract the relevant visible conversation context.
 2. Summarize tool/research outputs into `tool_outputs`.
-3. Infer `desired_output`.
+3. Infer `desired_output` and `options.mode`.
 4. Run `scripts/non_ai_writer.py --stdin`.
 5. Return the final draft and run id.
 
 The script cannot privately fetch a Claude or Codex conversation on its own. The agent must pass the visible context into the script. That is what the skill instructions enforce.
+
+## Modes
+
+Use one mode as the output type and style control:
+
+```txt
+article
+seo_brief
+landing_page
+report
+script
+email
+```
+
+Default to `article` when the user does not specify an output. Do not send a separate style field yet.
 
 ## Output Contract
 

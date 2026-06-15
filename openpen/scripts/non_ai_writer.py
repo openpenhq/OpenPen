@@ -22,6 +22,15 @@ DEFAULT_TIMEOUT_SECONDS = 600.0
 MAX_CLIENT_CONTEXT_CHARS = 120_000
 API_KEY_ENV_NAMES = ("OPENPEN_API_KEY", "NON_AI_WRITER_API_KEY")
 API_BASE_URL_ENV_NAMES = ("OPENPEN_API_BASE_URL", "NON_AI_WRITER_API_BASE_URL")
+DEFAULT_OPENPEN_MODE = "article"
+SUPPORTED_OPENPEN_MODES = {
+    "article",
+    "seo_brief",
+    "landing_page",
+    "report",
+    "script",
+    "email",
+}
 
 
 class NonAiWriterError(RuntimeError):
@@ -217,7 +226,11 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
     if isinstance(options, dict):
         normalized["options"] = normalize_options(options)
     else:
-        normalized["options"] = {"target_words": "auto", "output_format": "markdown"}
+        normalized["options"] = {
+            "mode": DEFAULT_OPENPEN_MODE,
+            "target_words": "auto",
+            "output_format": "markdown",
+        }
 
     metadata = payload.get("metadata")
     normalized["metadata"] = metadata if isinstance(metadata, dict) else {}
@@ -284,6 +297,7 @@ def normalize_tool_outputs(value: Any) -> list[dict[str, str]]:
 
 
 def normalize_options(value: dict[str, Any]) -> dict[str, Any]:
+    mode = normalize_openpen_mode(value.get("mode"))
     target_words = value.get("target_words", "auto")
     if target_words != "auto":
         try:
@@ -295,7 +309,14 @@ def normalize_options(value: dict[str, Any]) -> dict[str, Any]:
     output_format = value.get("output_format", "markdown")
     if output_format not in {"markdown", "plain_text"}:
         output_format = "markdown"
-    return {"target_words": target_words, "output_format": output_format}
+    return {"mode": mode, "target_words": target_words, "output_format": output_format}
+
+
+def normalize_openpen_mode(value: Any) -> str:
+    mode = as_nonempty_string(value)
+    if mode in SUPPORTED_OPENPEN_MODES:
+        return mode
+    return DEFAULT_OPENPEN_MODE
 
 
 def parse_json_response(raw: bytes, *, status: int) -> dict[str, Any]:

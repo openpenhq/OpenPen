@@ -51,6 +51,7 @@ Include:
 - relevant assistant research summaries, outlines, findings, and decisions
 - relevant tool outputs, scrape summaries, SERP notes, Reddit findings, customer language, product notes, changelogs, transcripts, or source excerpts
 - the inferred output type, such as `article`, `blog article`, `SEO brief`, `landing page section`, `newsletter`, `email`, or `script`
+- the OpenPen mode: `article`, `seo_brief`, `landing_page`, `report`, `script`, or `email`
 
 Exclude:
 - system prompts
@@ -86,6 +87,7 @@ Payload shape:
     }
   ],
   "options": {
+    "mode": "article",
     "target_words": "auto",
     "output_format": "markdown"
   },
@@ -94,6 +96,8 @@ Payload shape:
   }
 }
 ```
+
+Choose `options.mode` from the allowed OpenPen modes. Use `article` when unclear. Do not invent a separate style field; mode is the output type and style control for now.
 
 ## Run The Script
 

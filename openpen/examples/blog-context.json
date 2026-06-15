@@ -18,6 +18,7 @@
     }
   ],
   "options": {
+    "mode": "article",
     "target_words": "auto",
     "output_format": "markdown"
   },
