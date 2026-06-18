@@ -25,11 +25,21 @@ API_BASE_URL_ENV_NAMES = ("OPENPEN_API_BASE_URL", "NON_AI_WRITER_API_BASE_URL")
 DEFAULT_OPENPEN_MODE = "article"
 SUPPORTED_OPENPEN_MODES = {
     "article",
-    "seo_brief",
-    "landing_page",
-    "report",
-    "script",
     "email",
+    "memo",
+    "page",
+    "script",
+    "post",
+}
+OPENPEN_MODE_ALIASES = {
+    "blog": "article",
+    "blog_post": "article",
+    "seo": "article",
+    "seo_brief": "article",
+    "landing_page": "page",
+    "report": "memo",
+    "social": "post",
+    "social_post": "post",
 }
 
 
@@ -309,8 +319,12 @@ def normalize_options(value: dict[str, Any]) -> dict[str, Any]:
 
 def normalize_openpen_mode(value: Any) -> str:
     mode = as_nonempty_string(value)
+    if mode:
+        mode = mode.strip().lower().replace("-", "_").replace(" ", "_")
     if mode in SUPPORTED_OPENPEN_MODES:
         return mode
+    if mode in OPENPEN_MODE_ALIASES:
+        return OPENPEN_MODE_ALIASES[mode]
     return DEFAULT_OPENPEN_MODE
 
 

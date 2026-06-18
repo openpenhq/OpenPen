@@ -2,7 +2,7 @@
 
 The Non-AI Writer for Claude and ChatGPT.
 
-Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
+Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, email, memo, page, script, or post.
 
 ```txt
 agent conversation / research / tool outputs
@@ -23,7 +23,7 @@ Install OpenPen.
 
 1. Clone https://github.com/openpenhq/OpenPen
 2. Install the openpen skill for this agent.
-3. Use it when I ask for a final article, SEO brief, landing page section, newsletter, email, script, memo, or post.
+3. Use it when I ask for a final article, email, memo, page, script, or post.
 ```
 
 Or clone it yourself:
@@ -84,11 +84,11 @@ OpenPen uses one mode as the output type and style control:
 
 ```txt
 article
-seo_brief
-landing_page
-report
-script
 email
+memo
+page
+script
+post
 ```
 
 If the user does not specify a mode, the skill defaults to `article`.

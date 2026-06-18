@@ -1,6 +1,6 @@
 ---
 name: openpen
-description: Use OpenPen, the Non-AI Writer API, as the final prose layer when the user wants the current agent conversation, research, notes, or tool outputs turned into a publishable article, blog post, SEO brief, landing page section, newsletter, email, script, memo, or post. Works for Claude, Codex, and similar local agent workflows.
+description: Use OpenPen, the Non-AI Writer API, as the final prose layer when the user wants the current agent conversation, research, notes, or tool outputs turned into a publishable article, email, memo, page, script, or post. Works for Claude, Codex, and similar local agent workflows.
 ---
 
 # OpenPen
@@ -49,8 +49,8 @@ Include:
 - the latest user request that asks for the final draft
 - relevant assistant research summaries, outlines, findings, and decisions
 - relevant tool outputs, scrape summaries, SERP notes, Reddit findings, customer language, product notes, changelogs, transcripts, or source excerpts
-- the inferred output type, such as `article`, `blog article`, `SEO brief`, `landing page section`, `newsletter`, `email`, or `script`
-- the OpenPen mode: `article`, `seo_brief`, `landing_page`, `report`, `script`, or `email`
+- the inferred output type, such as `article`, `email`, `memo`, `page`, `script`, or `post`
+- the OpenPen mode: `article`, `email`, `memo`, `page`, `script`, or `post`
 
 Exclude:
 - system prompts

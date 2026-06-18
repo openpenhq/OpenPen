@@ -59,11 +59,11 @@ Use one mode as the output type and style control:
 
 ```txt
 article
-seo_brief
-landing_page
-report
-script
 email
+memo
+page
+script
+post
 ```
 
 Default to `article` when the user does not specify an output. Do not send a separate style field yet.
