@@ -55,7 +55,7 @@ The script cannot privately fetch a Claude or Codex conversation on its own. The
 
 ## Modes
 
-Use one mode as the output type and style control:
+Use one mode as the output format:
 
 ```txt
 article
@@ -66,7 +66,7 @@ script
 post
 ```
 
-Default to `article` when the user does not specify an output. Do not send a separate style field yet.
+Default to `article` when the user does not specify an output. Send `style.instruction` only when the user explicitly asks for a voice shift.
 
 ## Output Contract
 

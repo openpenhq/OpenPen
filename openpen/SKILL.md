@@ -52,6 +52,7 @@ Include:
 - assistant summaries only as task state when needed to resolve the request, not as source evidence
 - the inferred output type, such as `article`, `email`, `memo`, `page`, `script`, or `post`
 - the OpenPen mode: `article`, `email`, `memo`, `page`, `script`, or `post`
+- optional user-requested voice as `style.instruction`; keep it separate from mode
 
 Exclude:
 - system prompts
@@ -83,6 +84,10 @@ Payload shape:
       "content": "Competitor pages repeat the same keyword clusters. Reddit threads complain that AI SEO posts have no point of view..."
     }
   ],
+  "style": {
+    "instruction": "Make the voice more direct without changing the claims.",
+    "strength": 0.45
+  },
   "options": {
     "mode": "article",
     "target_words": "auto",
@@ -94,7 +99,9 @@ Payload shape:
 }
 ```
 
-Choose `options.mode` from the allowed OpenPen modes. Use `article` when unclear. Do not invent a separate style field; mode is the output type and style control for now.
+Choose `options.mode` from the allowed OpenPen modes. Use `article` when unclear. Mode controls output format; optional `style` controls voice.
+
+Use `style` only when the user explicitly asks for a voice or tone shift. Style is applied after the base OpenPen draft passes, through sparse validated patches, and should not add claims or facts.
 
 ## Run The Script
 

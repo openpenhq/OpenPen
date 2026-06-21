@@ -227,6 +227,10 @@ def normalize_payload(payload: dict[str, Any]) -> dict[str, Any]:
     if notes := as_nonempty_string(payload.get("notes")):
         normalized["notes"] = notes[:60_000]
 
+    style = normalize_style(payload.get("style") or payload.get("voice"))
+    if style:
+        normalized["style"] = style
+
     options = payload.get("options")
     if isinstance(options, dict):
         normalized["options"] = normalize_options(options)
@@ -315,6 +319,22 @@ def normalize_options(value: dict[str, Any]) -> dict[str, Any]:
     if output_format not in {"markdown", "plain_text"}:
         output_format = "markdown"
     return {"mode": mode, "target_words": target_words, "output_format": output_format}
+
+
+def normalize_style(value: Any) -> dict[str, Any] | None:
+    if isinstance(value, str):
+        instruction = as_nonempty_string(value)
+        return {"instruction": instruction[:800]} if instruction else None
+    if not isinstance(value, dict):
+        return None
+    instruction = as_nonempty_string(value.get("instruction")) or as_nonempty_string(value.get("voice"))
+    if not instruction:
+        return None
+    style: dict[str, Any] = {"instruction": instruction[:800]}
+    strength = value.get("strength")
+    if isinstance(strength, (int, float)) and not isinstance(strength, bool):
+        style["strength"] = max(0.0, min(float(strength), 1.0))
+    return style
 
 
 def normalize_openpen_mode(value: Any) -> str:

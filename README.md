@@ -2,7 +2,7 @@
 
 The Non-AI Writer for Claude and ChatGPT.
 
-Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, email, memo, page, script, or post.
+Your agent does the research. OpenPen sends the visible working context to the Non-AI Writer API and returns the final article, email, memo, page, script, or post. Optional voice instructions are applied after the source-backed draft passes.
 
 ```txt
 agent conversation / research / tool outputs
@@ -80,7 +80,7 @@ The agent should package visible conversation context and tool outputs, run the 
 
 ## Modes
 
-OpenPen uses one mode as the output type and style control:
+OpenPen uses `mode` as the output format:
 
 ```txt
 article
@@ -91,7 +91,7 @@ script
 post
 ```
 
-If the user does not specify a mode, the skill defaults to `article`.
+If the user does not specify a mode, the skill defaults to `article`. If the user asks for a voice shift, pass it as `style.instruction`.
 
 ## What The Script Does
 
