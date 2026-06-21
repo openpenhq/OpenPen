@@ -12,7 +12,7 @@ agent conversation / research / tool outputs
   -> final draft
 ```
 
-The skill is public. The API is private beta. You need an OpenPen account, API beta access, and an API key. Free draft runs are included during beta; credits apply after the free cap.
+The skill is public. The API is private beta. You need an OpenPen account, API beta access, and an API key. API draft runs do not spend Playground credits during beta.
 
 ## Install
 
@@ -107,8 +107,6 @@ The script cannot privately read a Claude or Codex conversation by itself. The a
 ## Requirements
 
 - Python 3.10+
-- OpenPen API key
-- API beta access
-- Free beta runs first; credits after the free cap
+- OpenPen API key with API beta access
 
 No Python dependencies are required.

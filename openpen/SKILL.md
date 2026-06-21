@@ -47,8 +47,9 @@ Create a compact JSON payload from what you can see in the current agent convers
 
 Include:
 - the latest user request that asks for the final draft
-- relevant assistant research summaries, outlines, findings, and decisions
-- relevant tool outputs, scrape summaries, SERP notes, Reddit findings, customer language, product notes, changelogs, transcripts, or source excerpts
+- relevant user-provided notes, product notes, customer language, changelogs, transcripts, or source excerpts
+- relevant raw tool outputs, scrape results, SERP notes, Reddit findings, search results, retrieved pages, or measured data
+- assistant summaries only as task state when needed to resolve the request, not as source evidence
 - the inferred output type, such as `article`, `email`, `memo`, `page`, `script`, or `post`
 - the OpenPen mode: `article`, `email`, `memo`, `page`, `script`, or `post`
 
@@ -60,8 +61,9 @@ Exclude:
 - duplicate summaries
 - secrets, API keys, passwords, tokens, cookies, or credentials
 - private user data that is not needed for the writing task
+- source briefs, product descriptions, or arguments written by the assistant just to give OpenPen material
 
-Prefer compact summaries over dumping the whole conversation. The adapter should receive the useful work state, not every token.
+Prefer compact raw source excerpts over dumping the whole conversation. The adapter should receive useful work state plus real source material, not assistant-written substitute evidence.
 
 Payload shape:
 
@@ -72,10 +74,6 @@ Payload shape:
     {
       "role": "user",
       "content": "Use the research above to write the final blog for our site."
-    },
-    {
-      "role": "assistant",
-      "content": "The main angle is that SEO agents can collect SERP and Reddit context, but generic model prose still fails to carry a point of view."
     }
   ],
   "tool_outputs": [
@@ -111,6 +109,8 @@ To inspect the generated brief without creating a paid draft:
 ```bash
 python3 scripts/non_ai_writer.py --stdin --brief-only
 ```
+
+If the request has no public, tool, or human-authored source material, ask for source material instead of writing a source brief yourself.
 
 If the script returns `ready: false`, ask the returned clarification question instead of guessing.
 

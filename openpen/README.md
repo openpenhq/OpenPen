@@ -33,7 +33,7 @@ python3 scripts/non_ai_writer.py --input examples/blog-context.json --brief-only
 python3 scripts/non_ai_writer.py --input examples/blog-context.json
 ```
 
-Use `--brief-only` to verify the adapter output without consuming a draft credit.
+Use `--brief-only` to verify the adapter output without creating a draft run.
 
 ## Claude Or Codex Usage
 
@@ -46,7 +46,7 @@ Use OpenPen to turn this research into the final blog post.
 The agent should:
 
 1. Extract the relevant visible conversation context.
-2. Summarize tool/research outputs into `tool_outputs`.
+2. Pass raw tool or research outputs into `tool_outputs`.
 3. Infer `desired_output` and `options.mode`.
 4. Run `scripts/non_ai_writer.py --stdin`.
 5. Return the final draft and run id.

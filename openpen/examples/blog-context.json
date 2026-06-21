@@ -4,10 +4,6 @@
     {
       "role": "user",
       "content": "Research the SERP and Reddit threads, then write the final blog article for our site."
-    },
-    {
-      "role": "assistant",
-      "content": "The core angle is that SEO agents can gather a lot of context, but the final draft still fails when it only repeats keyword phrasing. The article should explain why buyer language and point of view matter."
     }
   ],
   "tool_outputs": [
