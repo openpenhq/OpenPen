@@ -76,7 +76,22 @@ After Claude or Codex has researched, planned, or gathered context, ask:
 Use OpenPen to turn this research into the final article.
 ```
 
+You can also use the command-style shorthand:
+
+```txt
+/openpen turn this research into the final article
+```
+
 The agent should package visible conversation context and tool outputs, run the skill script, and return the final draft plus run id.
+
+For Codex CLI/IDE users, the optional prompt shim lives at `openpen/prompts/openpen.md`. Install it with:
+
+```bash
+mkdir -p ~/.codex/prompts
+cp openpen/prompts/openpen.md ~/.codex/prompts/openpen.md
+```
+
+Restart Codex after installing or editing prompt files. Depending on the Codex surface, the command may appear as `/openpen` or `/prompts:openpen`.
 
 ## Modes
 

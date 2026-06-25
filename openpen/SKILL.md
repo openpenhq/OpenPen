@@ -8,6 +8,7 @@ description: Use OpenPen, the Non-AI Writer API, as the final prose layer when t
 Use this skill when the user wants to turn the current work into a final draft with OpenPen.
 
 Typical triggers:
+- "/openpen <request>"
 - "Use The Non-AI Writer"
 - "Use OpenPen"
 - "send this to Non-AI Writer"
@@ -16,6 +17,11 @@ Typical triggers:
 - "turn this research into the final draft"
 - "use the final prose layer"
 - "make this publishable through my writer"
+
+Slash command shorthand:
+- If the user writes `/openpen ...`, treat everything after `/openpen` as the latest OpenPen draft request.
+- If `/openpen` has no text after it, use the visible prior context and ask only if no writing task can be inferred.
+- Use the same workflow as natural-language OpenPen requests; do not require a separate `/v1/briefs` call first.
 
 Do not ask the user to manually re-prompt OpenPen. Build the request from the current agent conversation and any visible tool results.
 

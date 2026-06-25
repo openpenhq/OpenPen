@@ -43,6 +43,12 @@ Once this skill is installed, the user can say:
 Use OpenPen to turn this research into the final blog post.
 ```
 
+Or use the command-style shorthand:
+
+```txt
+/openpen turn this research into the final blog post
+```
+
 The agent should:
 
 1. Extract the relevant visible conversation context.
@@ -52,6 +58,8 @@ The agent should:
 5. Return the final draft and run id.
 
 The script cannot privately fetch a Claude or Codex conversation on its own. The agent must pass the visible context into the script. That is what the skill instructions enforce.
+
+For Codex CLI/IDE users, an optional custom prompt shim is included at `prompts/openpen.md`. Copy it to `~/.codex/prompts/openpen.md` and restart Codex. Depending on the Codex surface, invoke it as `/openpen ...` or `/prompts:openpen ...`.
 
 ## Modes
 
